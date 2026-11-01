@@ -1,62 +1,44 @@
 import 'package:flutter/material.dart';
 
 class ProfileInfo extends StatelessWidget {
-  ProfileInfo({super.key});
+  const ProfileInfo({super.key});
 
   final String userName = "Alfan Fadillah Ramadhan";
   final String role = "Student of Global Institute";
 
-  final List<String> experiences = [
-    "Senior Mobile Legend Player",
-    "POS App Furniture",
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ProfileAvatar(userName: userName, role: role),
-
-        const SizedBox(height: 6),
-
-        Text(
-          userName,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          role,
-          style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-          textAlign: TextAlign.center),
-
-
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Project Experiences",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          ProfileAvatar(userName: userName, role: role),
+          const SizedBox(height: 6),
+          Text(
+            userName,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
           ),
-        ),
-
-        const Divider(height: 12),
-
-        Flexible(
-          child: ListView.builder(
-            itemCount: experiences.length,
-            itemBuilder: (context, index) {
-              return Card(
-                elevation: 2,
-                margin: const EdgeInsets.symmetric(vertical: 2),
-                child: ListTile(
-                  leading: const Icon(Icons.work, color: Colors.blueAccent),
-                  title: Text(experiences[index]),
-                ),
-              );
-            },
+          const SizedBox(height: 8),
+          Text(
+            role,
+            style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+            textAlign: TextAlign.center,
           ),
-        ),
-      ],
+          const SizedBox(height: 24),
+          const ProfileStats(),
+          const SizedBox(height: 24),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Project Experiences",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const Divider(height: 12),
+          ExperienceCard(),
+        ],
+      ),
     );
   }
 }
@@ -69,74 +51,30 @@ class ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          const CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.grey,
-            child: Icon(Icons.person, size: 50, color: Colors.white),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Fitur Edit belum tersedia saat ini."),
-                ),
-              );
-            },
-            icon: const Icon(Icons.edit),
-            label: const Text("Edit Profile"),
-          ),
-          const SizedBox(height: 24),
-          Container(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.blue[50],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        const Text(
-                          '4',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
-                        ),
-                        const SizedBox(height: 4),
-                        Text('Proyek', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          '100k',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
-                        ),
-                        const SizedBox(height: 4),
-                        Text('Followers', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          '2',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),
-                        ),
-                        const SizedBox(height: 4),
-                        Text('Following', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
-                  ]),
-          ],
+    return Column(
+      children: [
+        const CircleAvatar(
+          radius: 50,
+          backgroundColor: Colors.grey,
+          child: Icon(Icons.person, size: 50, color: Colors.white),
         ),
-      ),
-    ]),
-                
+        const SizedBox(height: 16),
+        ElevatedButton.icon(
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Fitur Edit belum tersedia saat ini."),
+              ),
+            );
+          },
+          icon: const Icon(Icons.edit),
+          label: const Text("Edit Profile"),
+        ),
+      ],
     );
   }
 }
+
 class ProfileStats extends StatelessWidget {
   const ProfileStats({super.key});
 
@@ -159,6 +97,7 @@ class ProfileStats extends StatelessWidget {
     );
   }
 }
+
 class StatItem extends StatelessWidget {
   final String count;
   final String label;
@@ -186,6 +125,34 @@ class StatItem extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ExperienceCard extends StatelessWidget {
+  ExperienceCard({super.key});
+
+  final List<String> experiences = [
+    "POS App Furniture",
+    "Web App Peminjaman Barang",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: experiences.length,
+      itemBuilder: (context, index) {
+        return Card(
+          elevation: 3,
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          child: ListTile(
+            leading: const Icon(Icons.work, color: Colors.blueAccent),
+            title: Text(experiences[index]),
+          ),
+        );
+      },
     );
   }
 }
