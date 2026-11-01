@@ -8,7 +8,7 @@ class ProfileInfo extends StatelessWidget {
 
   final List<String> experiences = [
     "Senior Mobile Legend Player",
-    "Most Listener Perunggu",
+    "POS App Furniture",
   ];
 
   @override
@@ -28,7 +28,33 @@ class ProfileInfo extends StatelessWidget {
         Text(
           role,
           style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.center),
+
+
+        const Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Project Experiences",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
+
+        const Divider(height: 12),
+
+        Flexible(
+          child: ListView.builder(
+            itemCount: experiences.length,
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 2,
+                margin: const EdgeInsets.symmetric(vertical: 2),
+                child: ListTile(
+                  leading: const Icon(Icons.work, color: Colors.blueAccent),
+                  title: Text(experiences[index]),
+                ),
+              );
+            },
+          ),
         ),
       ],
     );
@@ -102,8 +128,7 @@ class ProfileAvatar extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text('Following', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
-              ],
-            ),
+                  ]),
           ],
         ),
       ),
