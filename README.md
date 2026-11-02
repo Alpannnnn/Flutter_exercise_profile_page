@@ -1,17 +1,16 @@
-# flutter_exercise_p5
+# Profile App - Flutter Exercise P5
 
-A new Flutter project.
+Aplikasi profil sederhana yang dibuat menggunakan Flutter untuk latihan layout, kustomisasi widget, dan manajemen state dasar (`StatefulWidget`).
 
-## Getting Started
+## Fitur
+- **Profil & Avatar:** Menampilkan foto avatar, nama, dan role pengguna.
+- **Statistik:** Menampilkan informasi jumlah proyek, followers, dan following.
+- **Edit Profil:** Form popup (`AlertDialog`) untuk memperbarui nama dan role secara *real-time*.
+- **Project Experiences:** Menampilkan daftar pengalaman proyek menggunakan `ListView.builder` dan `Card`.
 
-This project is a starting point for a Flutter application.
+## Cara Jalankan Proyek
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone repositori ini:
+   ```bash
+   git clone [https://github.com/Alpannnnn/flutter_exercise_p5.git](https://github.com/Alpannnnn/Flutter_exercise_profile_page.git)
+   cd flutter_exercise_profile_page
