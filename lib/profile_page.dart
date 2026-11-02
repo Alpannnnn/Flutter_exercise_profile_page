@@ -9,8 +9,58 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  final String userName = "Alfan Fadillah Ramadhan";
-  final String role = "Student of Global Institute";
+  String userName = "Alfan Fadillah Ramadhan";
+  String role = "Student of Global Institute";
+
+  void editProfile() {
+    TextEditingController nameController = TextEditingController(
+      text: userName,
+    );
+
+    TextEditingController roleController = TextEditingController(text: role);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Edit Profile"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: nameController,
+                decoration: InputDecoration(labelText: "Nama"),
+              ),
+              SizedBox(height: 24),
+              TextFormField(
+                controller: roleController,
+                decoration: InputDecoration(labelText: "Role"),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  userName = nameController.text;
+                  role = roleController.text;
+                });
+                Navigator.pop(context);
+              },
+              child: Text("Save"),
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      nameController.dispose();
+      roleController.dispose();
+    });
+  }
 
    @override
   Widget build(BuildContext context) {
@@ -22,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        child: ProfileInfo(userName: userName, role: role),
+        child: ProfileInfo(userName: userName, role: role, onEdit: editProfile),
       ),
     );
   }
@@ -31,8 +81,14 @@ class _ProfilePageState extends State<ProfilePage> {
 class ProfileInfo extends StatelessWidget {
   final String userName;
   final String role;
+   final VoidCallback onEdit;
 
-  const ProfileInfo({super.key, required this.userName, required this.role});
+  const ProfileInfo({
+    super.key,
+    required this.userName,
+    required this.role,
+    required this.onEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +96,7 @@ class ProfileInfo extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          ProfileAvatar(userName: userName, role: role),
+           ProfileAvatar(userName: userName, role: role, onEdit: onEdit),
           const SizedBox(height: 6),
           Text(
             userName,
@@ -74,8 +130,14 @@ class ProfileInfo extends StatelessWidget {
 class ProfileAvatar extends StatelessWidget {
   final String userName;
   final String role;
+  final VoidCallback onEdit;
 
-  const ProfileAvatar({super.key, required this.userName, required this.role});
+  const ProfileAvatar({
+    super.key,
+    required this.userName,
+    required this.role,
+    required this.onEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +150,7 @@ class ProfileAvatar extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         ElevatedButton.icon(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Fitur Edit belum tersedia saat ini."),
-              ),
-            );
-          },
+           onPressed: onEdit,
           icon: const Icon(Icons.edit),
           label: const Text("Edit Profile"),
         ),
@@ -163,6 +219,8 @@ class ExperienceCard extends StatelessWidget {
   final List<String> experiences = [
     "POS App Furniture",
     "Web App Peminjaman Barang",
+    "Web App Sistem Parkir Otomatis",
+    "WEB App Sistem Manajemen RT/RW"
   ];
 
   @override
@@ -176,8 +234,11 @@ class ExperienceCard extends StatelessWidget {
           elevation: 3,
           margin: const EdgeInsets.symmetric(vertical: 4),
           child: ListTile(
-            leading: const Icon(Icons.work, color: Colors.blueAccent),
-            title: Text(experiences[index]),
+            leading: const Icon(
+              Icons.workspace_premium_sharp,
+              color: Colors.blueAccent,
+            ),
+            title: Text(experiences[index])
           ),
         );
       },
